@@ -20,7 +20,10 @@ CLASS zcl_work_order_validato_mporta DEFINITION
 
       validate_status_and_priority IMPORTING iv_status       TYPE ze_status_mporta
                                              iv_priority     TYPE ze_priority_mporta
-                                   RETURNING VALUE(rv_valid) TYPE abap_bool.
+                                   RETURNING VALUE(rv_valid) TYPE abap_bool,
+
+      check_technical_exists IMPORTING iv_technician_id TYPE ze_technician_id_mporta
+                             RETURNING VALUE(rv_exists) TYPE abap_bool.
 
   PRIVATE SECTION.
     CONSTANTS: c_valid_status_pe  TYPE string VALUE 'PE',
@@ -189,4 +192,17 @@ CLASS zcl_work_order_validato_mporta IMPLEMENTATION.
     ENDIF.
 
   ENDMETHOD.
+  METHOD check_technical_exists.
+
+    SELECT SINGLE  technician_id
+       FROM ztworkordermport
+       WHERE technician_id  = @iv_technician_id
+       INTO @DATA(lv_existe).
+    IF sy-subrc = 0.
+      rv_exists = abap_true.
+    ENDIF.
+
+  ENDMETHOD.
+
+
 ENDCLASS.

@@ -7,8 +7,6 @@ CLASS zcl_work_order_crud_testmporta DEFINITION
     TYPES:
       BEGIN OF ty_datos,
         lw_ztworkordermport TYPE ztworkordermport,
-        lw_ztcustomermporta TYPE ztcustomermporta,
-        lw_zttechnicimporta TYPE zttechnicimporta,
       END OF ty_datos.
 
     TYPES: ty_ztworkordermport TYPE TABLE OF ztworkordermport.
@@ -59,20 +57,13 @@ CLASS zcl_work_order_crud_testmporta IMPLEMENTATION.
       DATA(lv_ultimo_order) = gt_ultimo[ 1 ]-work_order_id.
     ENDIF.
 
-    lw_ztworkordermport = VALUE #( lw_ztworkordermport-customer_id   = lv_ultimo_order + 1
-                                   lw_ztworkordermport-technician_id = lv_ultimo_order + 1
+    lw_ztworkordermport = VALUE #( lw_ztworkordermport-customer_id   = '1'
+                                   lw_ztworkordermport-technician_id = '1'
                                    lw_ztworkordermport-work_order_id = lv_ultimo_order + 1
                                    lw_ztworkordermport-status       = 'T'
                                    lw_ztworkordermport-priority     = 'A'
                                    lw_ztworkordermport-description  = 'Prueba 1'
-                                   lw_ztworkordermport-creation_date = cl_abap_context_info=>get_system_date( )
-                                   lw_zttechnicimporta-technician_id = lv_ultimo_order + 1
-                                   lw_zttechnicimporta-name          = 'PORTA 1'
-                                   lw_zttechnicimporta-specialty     = 'ABAP'
-                                   lw_ztcustomermporta-customer_id   = lv_ultimo_order + 1
-                                   lw_ztcustomermporta-name          = 'Lorena 1'
-                                   lw_ztcustomermporta-address       = 'Argentina'
-                                   lw_ztcustomermporta-phone         = '123456789' ) .
+                                   lw_ztworkordermport-creation_date = cl_abap_context_info=>get_system_date( ) ) .
 
     IF lw_ztworkordermport  IS NOT INITIAL.
       me->test_create_work_order( EXPORTING lw_ztworkordermport = lw_ztworkordermport
@@ -101,20 +92,13 @@ CLASS zcl_work_order_crud_testmporta IMPLEMENTATION.
 
 
     "Se  modifica el registro insertado.
-    lw_ztworkordermport = VALUE #( lw_ztworkordermport-customer_id   = lv_ultimo_order + 1
-                                   lw_ztworkordermport-technician_id = lv_ultimo_order + 1
+    lw_ztworkordermport = VALUE #( lw_ztworkordermport-customer_id   = '1'
+                                   lw_ztworkordermport-technician_id = '1'
                                    lw_ztworkordermport-work_order_id = lv_ultimo_order + 1
                                    lw_ztworkordermport-status       = 'T'
-                                   lw_ztworkordermport-priority     = 'A'
-                                   lw_ztworkordermport-description  = 'Prueba 2'
-                                   lw_ztworkordermport-creation_date = cl_abap_context_info=>get_system_date( )
-                                   lw_zttechnicimporta-technician_id = lv_ultimo_order + 1
-                                   lw_zttechnicimporta-name          = 'PORTA 2'
-                                   lw_zttechnicimporta-specialty     = 'ABAP'
-                                   lw_ztcustomermporta-customer_id   = lv_ultimo_order + 1
-                                   lw_ztcustomermporta-name          = 'Lorena 2'
-                                   lw_ztcustomermporta-address       = 'Argentina'
-                                   lw_ztcustomermporta-phone         = '123456789' ) .
+                                   lw_ztworkordermport-priority     = 'O'
+                                   lw_ztworkordermport-description  = 'Prueba 3'
+                                   lw_ztworkordermport-creation_date = cl_abap_context_info=>get_system_date( ) ) .
 
     IF lw_ztworkordermport  IS NOT INITIAL.
       CLEAR: gt_data, lv_mensaje.
